@@ -1,69 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calculator</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div class="container">
-        <div class="calculator">
-            <form>
-
-                <!-- Display Screen -->
-                <div class="display">
-                    <input type="text" name="display" placeholder="0" readonly>
-                </div>
-
-                <!-- First Row -->
-                <div>
-                    <input type="button" value="AC" onclick="display.value = ''" class="operator">
-                    <input type="button" value="DE" onclick="display.value = display.value.slice(0, -1)" class="operator">
-                    <input type="button" value="." onclick="display.value += '.'" class="operator">
-                    <input type="button" value="/" onclick="display.value += '/'" class="operator">
-                </div>
-
-                <!-- Second Row -->
-                <div>
-                    <input type="button" value="7" onclick="display.value += '7'">
-                    <input type="button" value="8" onclick="display.value += '8'">
-                    <input type="button" value="9" onclick="display.value += '9'">
-                    <input type="button" value="*" onclick="display.value += '*'" class="operator">
-                </div>
-
-                <!-- Third Row -->
-                <div>
-                    <input type="button" value="4" onclick="display.value += '4'">
-                    <input type="button" value="5" onclick="display.value += '5'">
-                    <input type="button" value="6" onclick="display.value += '6'">
-                    <input type="button" value="-" onclick="display.value += '-'" class="operator">
-                </div>
-
-                <!-- Fourth Row -->
-                <div>
-                    <input type="button" value="1" onclick="display.value += '1'">
-                    <input type="button" value="2" onclick="display.value += '2'">
-                    <input type="button" value="3" onclick="display.value += '3'">
-                    <input type="button" value="+" onclick="display.value += '+'" class="operator">
-                </div>
-
-                <!-- Fifth Row -->
-                <div>
-                    <input type="button" value="00" onclick="display.value += '00'">
-                    <input type="button" value="0" onclick="display.value += '0'">
-                    <input type="button" value="=" onclick="display.value = eval(display.value)" class="equal operator">
-                </div>
-
-            </form>
-        </div>
+<div class="calc-wrapper">
+  <!-- Header -->
+  <div class="calc-header">
+    <div class="header-left">
+      <div class="calc-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e6e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <line x1="3" y1="9" x2="21" y2="9"/>
+          <line x1="9" y1="21" x2="9" y2="9"/>
+          <rect x="12" y="12" width="3" height="3" fill="#1e6e3c"/>
+          <rect x="16" y="12" width="3" height="3" fill="#1e6e3c"/>
+          <rect x="12" y="16" width="3" height="3" fill="#1e6e3c"/>
+          <rect x="16" y="16" width="3" height="3" fill="#1e6e3c"/>
+        </svg>
+        <span class="sparkle">✦</span>
+        <span class="sparkle2">✦</span>
+      </div>
+      <div>
+        <div class="header-title">Calculator</div>
+        <div class="header-sub">Perform quick and accurate calculations.</div>
+      </div>
     </div>
+    <button class="history-btn" onclick="toggleHistoryPanel()" title="History">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <polyline points="12 7 12 12 14.5 14.5"/>
+        <path d="M3.05 11a9 9 0 1 1 .5 4"/>
+        <polyline points="3 15 3.05 11 7 11"/>
+      </svg>
+    </button>
+  </div>
 
+  <div class="divider"></div>
 
-    <script src="script.js"></script>
+  <!-- Display -->
+  <div class="display" id="display">
+    <div class="display-top">
+      <span class="display-expr-top" id="exprTop"></span>
+      <button class="history-pill" onclick="toggleHistoryPanel()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <polyline points="12 7 12 12 14.5 14.5"/>
+        </svg>
+        History
+      </button>
+    </div>
+    <div class="display-bottom">
+      <div class="display-expr" id="expr"></div>
+      <div class="display-result" id="result">0</div>
+    </div>
+  </div>
+
+  <!-- History Panel -->
+  <div class="history-panel" id="historyPanel">
+    <div class="history-empty" id="historyEmpty">No history yet</div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="buttons">
+    <button class="btn btn-ac" onclick="pressAC()">AC</button>
+    <button class="btn btn-del" onclick="pressDel()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e6e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+        <line x1="18" y1="9" x2="12" y2="15"/>
+        <line x1="12" y1="9" x2="18" y2="15"/>
+      </svg>
+    </button>
+    <button class="btn btn-pct" onclick="pressOp('%')">%</button>
+    <button class="btn btn-op" onclick="pressOp('÷')">÷</button>
+
+    <button class="btn" onclick="pressNum('7')">7</button>
+    <button class="btn" onclick="pressNum('8')">8</button>
+    <button class="btn" onclick="pressNum('9')">9</button>
+    <button class="btn btn-op" onclick="pressOp('×')">×</button>
+
+    <button class="btn" onclick="pressNum('4')">4</button>
+    <button class="btn" onclick="pressNum('5')">5</button>
+    <button class="btn" onclick="pressNum('6')">6</button>
+    <button class="btn btn-op" onclick="pressOp('−')">−</button>
+
+    <button class="btn" onclick="pressNum('1')">1</button>
+    <button class="btn" onclick="pressNum('2')">2</button>
+    <button class="btn" onclick="pressNum('3')">3</button>
+    <button class="btn btn-op" onclick="pressOp('+')">+</button>
+
+    <button class="btn btn-zero" onclick="pressNum('0')">0</button>
+    <button class="btn" onclick="pressNum('.')">.</button>
+    <button class="btn btn-eq" onclick="pressEq()">=</button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="footer-heart">♥</span>
+    Designed &amp; Developed by <strong>Kanwal Imran</strong>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
-
 </html>
